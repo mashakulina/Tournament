@@ -1,48 +1,39 @@
 package ru.netology;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Game {
 
 
-    protected List<Player> players = new ArrayList<>();
+//    protected List<Player> players = new ArrayList<>();
+
+    protected Map<String, Integer> players = new HashMap<>();
 
     public void registerPlayer(Player player) {
-        players.add(player);
+        players.put(player.getName(), player.strength);
     }
 
-    public int findByName(String name) {
-        for (int i = 0; i < players.size(); i++) {
-            Player player = players.get(i);
-            if (player.getName().equals(name)) {
-                return i;
-            }
+    public int findByName(String name) throws NotRegisteredException {
+        if (!players.containsKey(name)) {
+            throw new NotRegisteredException("Игрок " + name + " не зарегистрирован");
         }
-        return -1;
+        return players.get(name);
     }
 
     public int round(String name1, String name2) throws NotRegisteredException {
-        int player1Num = findByName(name1);
-        int player2Num = findByName(name2);
 
-        if (player1Num == -1) {
-            throw new NotRegisteredException("Игрок " + name1 + " не зарегистрирован");
-        }
-        if (player2Num == -1) {
-            throw new NotRegisteredException("Игрок " + name2 + " не зарегистрирован");
-        }
+        int playerStrange1 = findByName(name1);
+        int playerStrange2 = findByName(name2);
 
-        int strength1 = players.get(player1Num).getStrength();
-        int strength2 = players.get(player2Num).getStrength();
-
-        if (strength1 > strength2) {
+        if (playerStrange1 > playerStrange2) {
             return 1;
         }
-        if (strength1 < strength2) {
+        if (playerStrange1 < playerStrange2) {
             return 2;
         }
         return 0;
     }
-
 }
