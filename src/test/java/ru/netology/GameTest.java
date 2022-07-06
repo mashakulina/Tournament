@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 class GameTest {
     Game game = new Game();
 
-
     @Test
     public void registerPlayer() throws NotRegisteredException {
         Player player1 = new Player(1, "Petya", 4);
@@ -17,7 +16,7 @@ class GameTest {
         game.registerPlayer(player1);
         game.registerPlayer(player2);
 
-        int actual = game.round(player1.getName(), player2.getName());
+        int actual = game.round(player1.name, player2.name);
         assertEquals(1, actual);
     }
 
@@ -80,6 +79,4 @@ class GameTest {
             game.round(player1.getName(), player2.getName());
         });
     }
-
-
 }
